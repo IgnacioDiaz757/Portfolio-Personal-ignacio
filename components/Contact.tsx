@@ -1,6 +1,6 @@
 "use client";
 
-import { GITHUB_URL, socialLinks } from "@/lib/data";
+import { GITHUB_URL, WHATSAPP_URL, socialLinks } from "@/lib/data";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Contact() {
@@ -21,11 +21,13 @@ export default function Contact() {
         </p>
         <div className="flex flex-col items-center justify-center gap-3 sm:gap-4 sm:flex-row">
           <a
-            href="mailto:hola@juanignaciodiaz.dev?subject=Consulta%20desde%20portfolio"
-            className="w-full sm:w-auto rounded-lg bg-blue-600 px-6 sm:px-8 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-blue-700 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent"
-            aria-label={t("contact.enviarEmail")}
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto rounded-lg bg-emerald-500 px-6 sm:px-8 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-black transition-all hover:bg-emerald-400 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/50 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-transparent"
+            aria-label={t("contact.enviarWhatsApp") || "Enviar mensaje por WhatsApp"}
           >
-            {t("contact.enviarEmail")}
+            {t("contact.enviarWhatsApp") || "Enviar por WhatsApp"}
           </a>
           <a
             href={GITHUB_URL}
