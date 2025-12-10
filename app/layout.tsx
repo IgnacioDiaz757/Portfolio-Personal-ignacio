@@ -1,21 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Oswald } from "next/font/google";
 import "./globals.css";
+import LanguageProviderWrapper from "@/components/LanguageProviderWrapper";
+import HtmlLangUpdater from "@/components/HtmlLangUpdater";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const oswald = Oswald({
+  variable: "--font-oswald",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Juan Ignacio Díaz — Desarrollador Full Stack",
   description:
-    "Desarrollador Full Stack con 6+ años de experiencia. Especializado en Next.js, React, TypeScript y Node.js. Construyo productos web escalables con foco en experiencia de usuario y resultados medibles.",
+    "Desarrollador Full Stack con 5 años de experiencia. Especializado en Next.js, React, TypeScript y Node.js. Construyo productos web escalables con foco en experiencia de usuario y resultados medibles.",
   keywords: [
     "desarrollador full stack",
     "Next.js",
@@ -58,9 +57,12 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${oswald.variable} antialiased`}
       >
-        {children}
+        <LanguageProviderWrapper>
+          <HtmlLangUpdater />
+          {children}
+        </LanguageProviderWrapper>
       </body>
     </html>
   );

@@ -9,17 +9,29 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
+import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { scrolled, activeSection, showScrollTop, sectionsRef, handleNavClick } =
     useScrollTracking();
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#0f0f0f] to-[#0a0a0a] text-zinc-50">
+      {/* Skip to main content link */}
+      <a
+        href="#main-content"
+        className="skip-to-main"
+        aria-label={t("skipToContent") || "Saltar al contenido principal"}
+      >
+        {t("skipToContent") || "Saltar al contenido principal"}
+      </a>
+      
       <BackgroundEffects />
 
       <Navigation
@@ -30,7 +42,7 @@ export default function Home() {
         onNavClick={(href) => handleNavClick(href, () => setMobileMenuOpen(false))}
       />
 
-      <main className="relative mx-auto max-w-7xl px-4 sm:px-6 pt-20 sm:pt-24">
+      <main id="main-content" className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 pt-20 sm:pt-24" role="main" aria-label="Contenido principal">
         <section
           id="inicio"
           ref={(el) => {
@@ -83,6 +95,15 @@ export default function Home() {
           }}
         >
           <Contact />
+        </section>
+
+        <section
+          id="formulario-contacto"
+          ref={(el) => {
+            sectionsRef.current["formulario-contacto"] = el;
+          }}
+        >
+          <ContactForm />
         </section>
 
         <Footer />

@@ -37,23 +37,80 @@ export function useScrollTracking() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  // Intersection Observer for animations
+  // Enhanced Intersection Observer for animations with different types
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in");
+            const element = entry.target as HTMLElement;
+            const animationType = element.getAttribute("data-animate") || "fade-in";
+            
+            // Remove existing animation classes
+            element.classList.remove(
+              "animate-fade-in",
+              "animate-fade-in-up",
+              "animate-fade-in-down",
+              "animate-fade-in-left",
+              "animate-fade-in-right",
+              "animate-scale-in",
+              "animate-slide-in-up"
+            );
+            
+            // Add appropriate animation based on data-animate value
+            switch (animationType) {
+              case "fade-in-up":
+                element.classList.add("animate-fade-in-up");
+                break;
+              case "fade-in-down":
+                element.classList.add("animate-fade-in-down");
+                break;
+              case "fade-in-left":
+                element.classList.add("animate-fade-in-left");
+                break;
+              case "fade-in-right":
+                element.classList.add("animate-fade-in-right");
+                break;
+              case "scale-in":
+                element.classList.add("animate-scale-in");
+                break;
+              case "slide-in-up":
+                element.classList.add("animate-slide-in-up");
+                break;
+              default:
+                element.classList.add("animate-fade-in");
+            }
+            
+            // Stop observing once animated
+            observer.unobserve(element);
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
 
     const elements = document.querySelectorAll("[data-animate]");
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
+  }, []);
+
+  // Parallax effect for background elements
+  useEffect(() => {
+    const handleParallax = throttle(() => {
+      const scrollY = window.scrollY;
+      const parallaxElements = document.querySelectorAll(".parallax-slow");
+      
+      parallaxElements.forEach((el) => {
+        const element = el as HTMLElement;
+        const speed = parseFloat(element.getAttribute("data-speed") || "0.5");
+        const yPos = -(scrollY * speed);
+        element.style.transform = `translateY(${yPos}px)`;
+      });
+    }, 16);
+
+    window.addEventListener("scroll", handleParallax, { passive: true });
+    return () => window.removeEventListener("scroll", handleParallax);
   }, []);
 
   const handleNavClick = useCallback((href: string, onMenuClose?: () => void) => {
@@ -70,4 +127,5 @@ export function useScrollTracking() {
     handleNavClick,
   };
 }
+
 

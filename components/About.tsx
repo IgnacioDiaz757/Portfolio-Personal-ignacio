@@ -1,29 +1,30 @@
+"use client";
+
+import { useLanguage } from "@/contexts/LanguageContext";
+
 export default function About() {
+  const { t } = useLanguage();
+  
   return (
     <section
       id="sobre-mi"
       className="py-16 sm:py-20 md:py-24 lg:py-32"
-      aria-label="Sobre mí"
+      aria-labelledby="about-heading"
     >
-      <div className="mx-auto max-w-3xl space-y-4 sm:space-y-6 px-4 sm:px-6" data-animate>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-          Sobre mí
+      <div className="mx-auto max-w-3xl space-y-4 sm:space-y-6 px-4 sm:px-6">
+        <h2 id="about-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-white" data-animate="fade-in-up">
+          {t("about.titulo")}
         </h2>
-        <div className="space-y-3 sm:space-y-4 text-base sm:text-lg text-zinc-400">
+        <div className="space-y-3 sm:space-y-4 text-base sm:text-lg text-zinc-300" data-animate="fade-in-up" style={{ animationDelay: "200ms" }}>
           <p>
-            Con más de <strong className="text-white">3 años de experiencia</strong> en desarrollo web, me
-            especializo en crear soluciones digitales que combinan diseño
-            elegante con funcionalidad robusta.
+            {t("about.parrafo1")} <strong className="text-white">{t("about.parrafo1Bold")}</strong> {t("about.parrafo1Cont")}
           </p>
           <p>
-            Mi enfoque se centra en construir productos que no solo se
-            vean bien, sino que también ofrezcan una experiencia excepcional
-            y resultados medibles para los usuarios y el negocio.
+            {t("about.parrafo2")}
           </p>
           <p>
-            Trabajo principalmente con tecnologías modernas como{" "}
-            <strong className="text-white">Next.js, React, TypeScript y Node.js</strong>, siempre buscando las mejores
-            prácticas y las últimas tendencias en desarrollo web.
+            {t("about.parrafo3")}{" "}
+            <strong className="text-white">{t("about.parrafo3Bold")}</strong> {t("about.parrafo3Cont")}
           </p>
         </div>
       </div>

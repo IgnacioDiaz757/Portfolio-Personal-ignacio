@@ -1,36 +1,38 @@
 "use client";
 
 import { GITHUB_URL, WHATSAPP_URL } from "@/lib/data";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface HeroProps {
   onNavClick: (href: string, onMenuClose?: () => void) => void;
 }
 
 export default function Hero({ onNavClick }: HeroProps) {
+  const { t } = useLanguage();
+  
   return (
     <section
       id="inicio"
       className="flex min-h-[85vh] sm:min-h-[90vh] flex-col items-center justify-center space-y-6 sm:space-y-8 text-center px-4"
-      aria-label="Sección de inicio"
+      aria-labelledby="hero-heading"
     >
-      <div className="space-y-4 sm:space-y-6 w-full" data-animate>
-        <div className="inline-block rounded-full border border-white/10 bg-white/5 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm text-zinc-300">
-          👋 Hola, soy Juan Ignacio
+      <div className="space-y-4 sm:space-y-6 w-full">
+        <div className="inline-block rounded-full border border-white/10 bg-white/5 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm text-zinc-300 animate-scale-in">
+          {t("hero.saludo")}
         </div>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white px-4">
-          Desarrollador Full Stack
+        <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white px-4 animate-fade-in-up animate-delay-100">
+          {t("hero.titulo")}
         </h1>
-        <p className="mx-auto max-w-2xl text-base sm:text-lg md:text-xl lg:text-2xl text-zinc-400 px-4">
-          Construyo productos web escalables con foco en experiencia de
-          usuario y entregas medibles.
+        <p className="mx-auto max-w-2xl text-base sm:text-lg md:text-xl lg:text-2xl text-zinc-300 px-4 animate-fade-in-up animate-delay-200">
+          {t("hero.descripcion")}
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4 px-4">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4 px-4 animate-fade-in-up animate-delay-300">
           <a
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-white/20 bg-white/5 p-2.5 sm:p-3 text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
-            aria-label="Ver repositorios en GitHub"
+            className="rounded-full border border-white/20 bg-white/5 p-2.5 sm:p-3 text-white transition-all hover:bg-white/10 hover:scale-110 hover:rotate-12 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
+            aria-label="Ver repositorios en GitHub (se abre en nueva pestaña)"
           >
             <svg
               viewBox="0 0 24 24"
@@ -47,17 +49,17 @@ export default function Hero({ onNavClick }: HeroProps) {
               e.preventDefault();
               onNavClick("#contacto");
             }}
-            className="rounded-lg bg-blue-600 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black"
+            className="rounded-lg bg-blue-600 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-blue-700 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black"
           >
-            Contáctame
+            {t("hero.contactame")}
           </a>
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg bg-emerald-500 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-black transition-all hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-black"
+            className="rounded-lg bg-emerald-500 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-black transition-all hover:bg-emerald-400 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/50 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-black"
           >
-            Trabajá conmigo
+            {t("hero.trabajaConmigo")}
           </a>
           <a
             href="#proyectos"
@@ -65,21 +67,21 @@ export default function Hero({ onNavClick }: HeroProps) {
               e.preventDefault();
               onNavClick("#proyectos");
             }}
-            className="rounded-lg border border-white/10 bg-white/5 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
+            className="rounded-lg border border-white/10 bg-white/5 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-white/10 hover:scale-105 hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
           >
-            Ver Proyectos
+            {t("hero.verProyectos")}
           </a>
         </div>
       </div>
-      <div className="mt-8 sm:mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-zinc-500 px-4">
+      <div className="mt-8 sm:mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-zinc-400 px-4">
         <div className="flex items-center gap-2">
           <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" aria-hidden="true" />
-          <span>Disponible para proyectos</span>
+          <span>{t("hero.disponible")}</span>
         </div>
         <span aria-hidden="true">•</span>
-        <span>Córdoba, Argentina</span>
+        <span>{t("hero.ubicacion")}</span>
         <span aria-hidden="true">•</span>
-        <span>Remoto</span>
+        <span>{t("hero.remoto")}</span>
       </div>
     </section>
   );

@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "inicio": "Home",
+    "sobreMi": "About",
+    "habilidades": "Skills",
+    "proyectos": "Projects",
+    "experiencia": "Experience",
+    "contacto": "Contact",
+    "trabajaConmigo": "Work with me"
+  },
+  "hero": {
+    "saludo": "👋 Hello, I'm Juan Ignacio",
+    "titulo": "Full Stack Developer",
+    "descripcion": "I build scalable web products focused on user experience and measurable results.",
+    "contactame": "Contact me",
+    "trabajaConmigo": "Work with me",
+    "verProyectos": "View Projects",
+    "disponible": "Available for projects",
+    "ubicacion": "Córdoba, Argentina",
+    "remoto": "Remote"
+  },
+  "about": {
+    "titulo": "About me",
+    "parrafo1": "With more than",
+    "parrafo1Bold": "6 years of experience",
+    "parrafo1Cont": "in web development, I specialize in creating digital solutions that combine elegant design with robust functionality.",
+    "parrafo2": "My approach focuses on building products that not only look good, but also offer an exceptional experience and measurable results for users and business.",
+    "parrafo3": "I work mainly with modern technologies such as",
+    "parrafo3Bold": "Next.js, React, TypeScript and Node.js",
+    "parrafo3Cont": ", always seeking best practices and the latest trends in web development."
+  },
+  "skills": {
+    "titulo": "Skills & Technologies",
+    "subtitulo": "Technology stack I use to build modern products"
+  },
+  "projects": {
+    "titulo": "Featured Projects",
+    "subtitulo": "Some of the projects I've worked on",
+    "verDemo": "View Demo →",
+    "codigo": "Code →",
+    "masProyectos": "If you want to see more projects, I invite you to my GitHub"
+  },
+  "experience": {
+    "titulo": "Experience",
+    "subtitulo": "My professional journey"
+  },
+  "contact": {
+    "titulo": "Let's work together?",
+    "descripcion": "I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.",
+    "enviarEmail": "Send Email",
+    "verGitHub": "View GitHub",
+    "tambienEn": "You can also find me on:"
+  },
+  "footer": {
+    "derechos": "All rights reserved.",
+    "hechoCon": "Made with",
+    "usando": "using Next.js and TypeScript"
+  },
+  "skipToContent": "Skip to main content",
+  "contactForm": {
+    "titulo": "Contact me",
+    "subtitulo": "Fill out the form and I'll contact you via WhatsApp",
+    "nombre": "First name",
+    "nombrePlaceholder": "Your first name",
+    "apellido": "Last name",
+    "apellidoPlaceholder": "Your last name",
+    "telefono": "Phone",
+    "telefonoPlaceholder": "+1 234 567-8900",
+    "email": "Email",
+    "emailPlaceholder": "your@email.com",
+    "descripcion": "Brief description",
+    "descripcionPlaceholder": "Tell me about your project...",
+    "enviar": "Send via WhatsApp",
+    "enviando": "Sending..."
+  }
+}
+

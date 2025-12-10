@@ -1,6 +1,8 @@
 "use client";
 
-import { navLinks, GITHUB_URL, WHATSAPP_URL } from "@/lib/data";
+import { useState, useRef, useEffect } from "react";
+import { GITHUB_URL, WHATSAPP_URL } from "@/lib/data";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface NavigationProps {
   scrolled: boolean;
@@ -10,6 +12,15 @@ interface NavigationProps {
   onNavClick: (href: string, onMenuClose?: () => void) => void;
 }
 
+const navLinks = [
+  { key: "inicio", href: "#inicio" },
+  { key: "sobreMi", href: "#sobre-mi" },
+  { key: "habilidades", href: "#habilidades" },
+  { key: "proyectos", href: "#proyectos" },
+  { key: "experiencia", href: "#experiencia" },
+  { key: "contacto", href: "#contacto" },
+] as const;
+
 export default function Navigation({
   scrolled,
   mobileMenuOpen,
@@ -17,6 +28,96 @@ export default function Navigation({
   onMenuToggle,
   onNavClick,
 }: NavigationProps) {
+  const { language, setLanguage, t } = useLanguage();
+  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
+  const languageMenuRefDesktop = useRef<HTMLDivElement>(null);
+  const languageMenuRefMobile = useRef<HTMLDivElement>(null);
+
+  const languages = [
+    { code: "es" as const, flag: "https://flagcdn.com/w20/es.png", label: "Español" },
+    { code: "en" as const, flag: "https://flagcdn.com/w20/us.png", label: "English" },
+    { code: "pt" as const, flag: "https://flagcdn.com/w20/pt.png", label: "Português" },
+  ];
+
+  const currentLanguage = languages.find((lang) => lang.code === language) || languages[0];
+
+  // Cerrar menú de idiomas al hacer click fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      const isOutsideDesktop = languageMenuRefDesktop.current && 
+        !languageMenuRefDesktop.current.contains(target);
+      const isOutsideMobile = languageMenuRefMobile.current && 
+        !languageMenuRefMobile.current.contains(target);
+      
+      if (isOutsideDesktop && isOutsideMobile) {
+        setLanguageMenuOpen(false);
+      }
+    };
+
+    if (languageMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [languageMenuOpen]);
+
+  const handleLanguageSelect = (langCode: "es" | "en" | "pt") => {
+    setLanguage(langCode);
+    setLanguageMenuOpen(false);
+  };
+
+  // Keyboard navigation for language menu
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!languageMenuOpen) return;
+
+      const menuItems = Array.from(
+        document.querySelectorAll('[role="menuitem"]')
+      ) as HTMLElement[];
+      
+      if (menuItems.length === 0) return;
+
+      const currentIndex = menuItems.findIndex(
+        (item) => item === document.activeElement
+      );
+
+      switch (e.key) {
+        case "Escape":
+          setLanguageMenuOpen(false);
+          (document.querySelector('[aria-label*="idioma"]') as HTMLElement)?.focus();
+          break;
+        case "ArrowDown":
+          e.preventDefault();
+          const nextIndex = (currentIndex + 1) % menuItems.length;
+          menuItems[nextIndex]?.focus();
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          const prevIndex = currentIndex <= 0 ? menuItems.length - 1 : currentIndex - 1;
+          menuItems[prevIndex]?.focus();
+          break;
+        case "Home":
+          e.preventDefault();
+          menuItems[0]?.focus();
+          break;
+        case "End":
+          e.preventDefault();
+          menuItems[menuItems.length - 1]?.focus();
+          break;
+      }
+    };
+
+    if (languageMenuOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [languageMenuOpen]);
   return (
     <nav
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
@@ -47,8 +148,9 @@ export default function Navigation({
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-white/20 bg-white/5 p-2 text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
+            className="rounded-full border-2 border-emerald-500 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black"
             aria-label="Ir al perfil de GitHub"
+            style={{ borderColor: '#10b981' }}
           >
             <svg
               viewBox="0 0 24 24"
@@ -71,7 +173,7 @@ export default function Navigation({
                 className={`text-xs lg:text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black rounded px-2 py-1 ${
                   activeSection === link.href.replace("#", "")
                     ? "text-white"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-zinc-300 hover:text-white"
                 }`}
                 aria-current={
                   activeSection === link.href.replace("#", "")
@@ -79,9 +181,79 @@ export default function Navigation({
                     : undefined
                 }
               >
-                {link.label}
+                {t(`nav.${link.key}`)}
               </a>
             ))}
+          </div>
+          {/* Language Selector - Desktop */}
+          <div className="relative" ref={languageMenuRefDesktop}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setLanguageMenuOpen(!languageMenuOpen);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setLanguageMenuOpen(!languageMenuOpen);
+                }
+              }}
+              className="rounded-full border-2 border-emerald-500 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer"
+              aria-label={`Idioma actual: ${currentLanguage.label}. Seleccionar idioma`}
+              aria-expanded={languageMenuOpen}
+              aria-haspopup="true"
+              aria-controls="language-menu-desktop"
+              type="button"
+              style={{ borderColor: '#10b981' }}
+            >
+              <img 
+                src={currentLanguage.flag} 
+                alt=""
+                className="w-5 h-5 object-cover rounded-sm pointer-events-none"
+                aria-hidden="true"
+              />
+            </button>
+            {languageMenuOpen && (
+              <div 
+                id="language-menu-desktop"
+                role="menu"
+                className="absolute right-0 mt-2 w-40 rounded-lg border border-white/10 bg-black/95 backdrop-blur-md shadow-lg z-[60]"
+                aria-label="Menú de selección de idioma"
+              >
+                <div className="py-2">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLanguageSelect(lang.code);
+                      }}
+                      role="menuitem"
+                      tabIndex={language === lang.code ? 0 : -1}
+                      className={`w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors cursor-pointer focus:outline-none focus:bg-white/10 ${
+                        language === lang.code
+                          ? "bg-white/10 text-white font-semibold"
+                          : "text-zinc-300 hover:bg-white/5 hover:text-white"
+                      }`}
+                      type="button"
+                      aria-label={`Cambiar idioma a ${lang.label}`}
+                      aria-checked={language === lang.code}
+                    >
+                      <img 
+                        src={lang.flag} 
+                        alt=""
+                        className="w-5 h-5 object-cover rounded-sm pointer-events-none"
+                        aria-hidden="true"
+                      />
+                      <span>{lang.label}</span>
+                      {language === lang.code && (
+                        <span className="ml-auto text-blue-400" aria-hidden="true">✓</span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           <a
             href={WHATSAPP_URL}
@@ -89,34 +261,106 @@ export default function Navigation({
             rel="noopener noreferrer"
             className="rounded-full bg-emerald-500 px-4 lg:px-5 py-2 text-xs lg:text-sm font-semibold text-black transition hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-black"
           >
-            Trabajá conmigo
+            {t("nav.trabajaConmigo")}
           </a>
         </div>
 
-        {/* Mobile/Tablet Menu Button */}
-        <button
-          className="xl:hidden text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black rounded p-2"
-          onClick={onMenuToggle}
-          aria-expanded={mobileMenuOpen}
-          aria-label="Toggle menu"
-          aria-controls="mobile-menu"
-        >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            {mobileMenuOpen ? (
-              <path d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path d="M4 6h16M4 12h16M4 18h16" />
+        {/* Mobile/Tablet Actions */}
+        <div className="xl:hidden flex items-center gap-2">
+          {/* Language Selector - Mobile/Tablet */}
+          <div className="relative" ref={languageMenuRefMobile}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setLanguageMenuOpen(!languageMenuOpen);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setLanguageMenuOpen(!languageMenuOpen);
+                }
+              }}
+              className="rounded-full border-2 border-emerald-500 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer"
+              aria-label={`Idioma actual: ${currentLanguage.label}. Seleccionar idioma`}
+              aria-expanded={languageMenuOpen}
+              aria-haspopup="true"
+              aria-controls="language-menu-mobile"
+              type="button"
+              style={{ borderColor: '#10b981' }}
+            >
+              <img 
+                src={currentLanguage.flag} 
+                alt=""
+                className="w-5 h-5 object-cover rounded-sm pointer-events-none"
+                aria-hidden="true"
+              />
+            </button>
+            {languageMenuOpen && (
+              <div 
+                id="language-menu-mobile"
+                role="menu"
+                className="absolute right-0 mt-2 w-40 rounded-lg border border-white/10 bg-black/95 backdrop-blur-md shadow-lg z-[60]"
+                aria-label="Menú de selección de idioma"
+              >
+                <div className="py-2">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLanguageSelect(lang.code);
+                      }}
+                      role="menuitem"
+                      tabIndex={language === lang.code ? 0 : -1}
+                      className={`w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors cursor-pointer focus:outline-none focus:bg-white/10 ${
+                        language === lang.code
+                          ? "bg-white/10 text-white font-semibold"
+                          : "text-zinc-300 hover:bg-white/5 hover:text-white"
+                      }`}
+                      type="button"
+                      aria-label={`Cambiar idioma a ${lang.label}`}
+                      aria-checked={language === lang.code}
+                    >
+                      <img 
+                        src={lang.flag} 
+                        alt=""
+                        className="w-5 h-5 object-cover rounded-sm pointer-events-none"
+                        aria-hidden="true"
+                      />
+                      <span>{lang.label}</span>
+                      {language === lang.code && (
+                        <span className="ml-auto text-blue-400" aria-hidden="true">✓</span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
             )}
-          </svg>
-        </button>
+          </div>
+          <button
+            className="text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black rounded p-2"
+            onClick={onMenuToggle}
+            aria-expanded={mobileMenuOpen}
+            aria-label="Toggle menu"
+            aria-controls="mobile-menu"
+          >
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              {mobileMenuOpen ? (
+                <path d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile/Tablet Menu */}
@@ -137,13 +381,13 @@ export default function Navigation({
                 className={`text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-2 py-1 ${
                   activeSection === link.href.replace("#", "")
                     ? "text-white"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-zinc-300 hover:text-white"
                 }`}
                 aria-current={
                   activeSection === link.href.replace("#", "") ? "page" : undefined
                 }
               >
-                {link.label}
+                {t(`nav.${link.key}`)}
               </a>
             ))}
             <a
@@ -152,7 +396,7 @@ export default function Navigation({
               rel="noopener noreferrer"
               className="mt-2 rounded-full bg-emerald-500 px-4 py-2 text-center text-sm font-semibold text-black transition hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400"
             >
-              Trabajá conmigo
+              {t("nav.trabajaConmigo")}
             </a>
           </div>
         </div>
