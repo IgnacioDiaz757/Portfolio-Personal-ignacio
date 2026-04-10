@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "inicio": "Home",
+    "sobreMi": "About",
+    "habilidades": "Skills",
+    "proyectos": "Projects",
+    "experiencia": "Experience",
+    "contacto": "Contact",
+    "trabajaConmigo": "Work with me"
+  },
+  "hero": {
+    "saludo": "👋 Hello, I'm Juan Ignacio",
+    "titulo": "Full Stack Developer",
+    "descripcion": "I build scalable web products focused on user experience and measurable results.",
+    "contactame": "Contact me",
+    "trabajaConmigo": "Work with me",
+    "verProyectos": "View Projects",
+    "disponible": "Available for projects",
+    "ubicacion": "Córdoba, Argentina",
+    "remoto": "Remote"
+  },
+  "about": {
+    "titulo": "About me",
+    "parrafo1": "With ",
+    "parrafo1Bold": "more than 3 years of experience",
+    "parrafo1Cont": "in web development, I specialize in creating digital solutions that combine elegant design with robust functionality.",
+    "parrafo2": "My approach focuses on building products that not only look good, but also offer an exceptional experience and measurable results for users and business.",
+    "parrafo3": "I work with",
+    "parrafo3Bold": "HTML, CSS, JavaScript, SQL, PostgreSQL, interface design, React, Next.js, Node.js, and applied AI in development",
+    "parrafo3Cont": ", plus other technologies as the project requires, prioritizing best practices and solutions aligned with business goals."
+  },
+  "skills": {
+    "titulo": "Skills & Technologies",
+    "subtitulo": "Technology stack I use to build modern products"
+  },
+  "projects": {
+    "titulo": "Featured Projects",
+    "subtitulo": "Some of the projects I've worked on",
+    "verDemo": "View Demo →",
+    "codigo": "Code →",
+    "masProyectos": "These are some personal projects I have built. I have also worked alongside other developers, solving different problems and creating other types of solutions. If you want to know more, contact me."
+  },
+  "experience": {
+    "titulo": "Experience",
+    "subtitulo": "My professional journey"
+  },
+  "contact": {
+    "titulo": "Let's work together?",
+    "descripcion": "I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.",
+    "enviarWhatsApp": "Send via WhatsApp",
+    "verGitHub": "View GitHub",
+    "tambienEn": "You can also find me on:",
+    "whatsappFlotante": "Contact on WhatsApp"
+  },
+  "footer": {
+    "derechos": "All rights reserved.",
+    "hechoCon": "Made with",
+    "usando": "using Next.js and TypeScript"
+  },
+  "skipToContent": "Skip to main content",
+  "contactForm": {
+    "titulo": "Contact me",
+    "subtitulo": "Fill out the form and I'll contact you via WhatsApp",
+    "nombre": "First name",
+    "nombrePlaceholder": "Your first name",
+    "apellido": "Last name",
+    "apellidoPlaceholder": "Your last name",
+    "telefono": "Phone",
+    "telefonoPlaceholder": "+1 234 567-8900",
+    "email": "Email",
+    "emailPlaceholder": "your@email.com",
+    "descripcion": "Brief description",
+    "descripcionPlaceholder": "Tell me about your project...",
+    "enviar": "Send via WhatsApp",
+    "enviando": "Sending..."
+  }
+}
+
