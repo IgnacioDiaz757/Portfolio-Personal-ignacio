@@ -44,7 +44,7 @@ export default function Skills() {
               aria-selected={i === active}
               aria-controls="skills-panel"
               onClick={() => setActive(i)}
-              className={`rounded-full border px-4 py-2 text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+              className={`min-h-11 rounded-full border px-4 py-2 text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
                 i === active
                   ? "border-white/30 bg-white text-black"
                   : "border-white/10 bg-white/5 text-zinc-300 hover:border-white/20 hover:bg-white/10"

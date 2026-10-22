@@ -154,7 +154,7 @@ ${formData.descripcion}`;
           <a
             href={cvUrl(language)}
             download
-            className="inline-flex items-center gap-2 rounded-lg px-1 py-1 text-sm font-medium text-zinc-300 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg px-1 py-1 text-sm font-medium text-zinc-300 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
             <FiDownload aria-hidden="true" className="h-4 w-4" />
             {t("contact.descargarCV")}

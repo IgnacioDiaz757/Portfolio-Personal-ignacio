@@ -13,7 +13,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className={`rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer ${className}`}
+      className={`min-h-11 min-w-11 md:min-h-0 md:min-w-0 rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer ${className}`}
       aria-label={isDark ? t("nav.temaClaro") : t("nav.temaOscuro")}
       title={isDark ? t("nav.temaClaro") : t("nav.temaOscuro")}
     >

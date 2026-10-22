@@ -33,7 +33,7 @@ export default function Hero({ onNavClick }: HeroProps) {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-white/20 bg-white/5 p-2.5 sm:p-3 text-white transition-all hover:bg-white/10 hover:scale-110 hover:rotate-12 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 p-2.5 sm:p-3 text-white transition-all hover:bg-white/10 hover:scale-110 hover:rotate-12 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
             aria-label="Ver repositorios en GitHub (se abre en nueva pestaña)"
           >
             <svg
@@ -51,7 +51,7 @@ export default function Hero({ onNavClick }: HeroProps) {
               e.preventDefault();
               onNavClick("#contacto");
             }}
-            className="rounded-lg bg-blue-600 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-[#ffffff] transition-all hover:bg-blue-700 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black"
+            className="inline-flex rounded-lg bg-blue-600 min-h-11 items-center justify-center px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-[#ffffff] transition-all hover:bg-blue-700 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black"
           >
             {t("hero.contactame")}
           </a>
@@ -59,7 +59,7 @@ export default function Hero({ onNavClick }: HeroProps) {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg bg-emerald-500 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-black transition-all hover:bg-emerald-400 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/50 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-black"
+            className="inline-flex rounded-lg bg-emerald-500 min-h-11 items-center justify-center px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-black transition-all hover:bg-emerald-400 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/50 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-black"
           >
             {t("hero.trabajaConmigo")}
           </a>
@@ -69,14 +69,14 @@ export default function Hero({ onNavClick }: HeroProps) {
               e.preventDefault();
               onNavClick("#proyectos");
             }}
-            className="rounded-lg border border-white/10 bg-white/5 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-white/10 hover:scale-105 hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
+            className="inline-flex rounded-lg border border-white/10 bg-white/5 min-h-11 items-center justify-center px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-white/10 hover:scale-105 hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
           >
             {t("hero.verProyectos")}
           </a>
           <a
             href={cvUrl(language)}
             download
-            className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-white/10 hover:scale-105 hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
+            className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 min-h-11 justify-center px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-white/10 hover:scale-105 hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
           >
             <FiDownload aria-hidden="true" className="h-4 w-4" />
             {t("hero.descargarCV")}

@@ -168,7 +168,7 @@ export default function Navigation({
             e.preventDefault();
             onNavClick("#inicio");
           }}
-          className="text-base sm:text-lg font-bold tracking-tight text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black rounded"
+          className="inline-flex min-h-11 items-center text-base sm:text-lg font-bold tracking-tight text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black rounded"
           aria-label="Ir al inicio"
         >
           <span className="hidden sm:inline">Juan Ignacio Díaz</span>
@@ -181,7 +181,7 @@ export default function Navigation({
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="order-2 rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black"
+            className="order-2 min-h-11 min-w-11 md:min-h-0 md:min-w-0 rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black"
             aria-label="Ir al perfil de GitHub"
           >
             <svg
@@ -231,7 +231,7 @@ export default function Navigation({
                   setLanguageMenuOpen(!languageMenuOpen);
                 }
               }}
-              className="rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer"
+              className="min-h-11 min-w-11 md:min-h-0 md:min-w-0 rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer"
               aria-label={`Idioma actual: ${currentLanguage.label}. Seleccionar idioma`}
               aria-expanded={languageMenuOpen}
               aria-haspopup="true"
@@ -313,7 +313,7 @@ export default function Navigation({
                   setLanguageMenuOpen(!languageMenuOpen);
                 }
               }}
-              className="rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer"
+              className="min-h-11 min-w-11 md:min-h-0 md:min-w-0 rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer"
               aria-label={`Idioma actual: ${currentLanguage.label}. Seleccionar idioma`}
               aria-expanded={languageMenuOpen}
               aria-haspopup="true"
@@ -370,7 +370,7 @@ export default function Navigation({
             )}
           </div>
           <button
-            className="text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black rounded p-2"
+            className="min-h-11 min-w-11 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black rounded p-2"
             onClick={onMenuToggle}
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle menu"

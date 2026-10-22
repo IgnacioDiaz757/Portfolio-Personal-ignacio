@@ -93,7 +93,7 @@ function ProjectLinks({ project, onCase }: { project: Project; onCase?: () => vo
           href={project.links.live}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded text-sm font-medium text-blue-400 hover:text-blue-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          className="inline-flex min-h-11 items-center rounded text-sm font-medium text-blue-400 hover:text-blue-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           aria-label={`${t("projects.verDemo")} ${project.title} (se abre en nueva pestaña)`}
         >
           {t("projects.verDemo")}
@@ -104,7 +104,7 @@ function ProjectLinks({ project, onCase }: { project: Project; onCase?: () => vo
           href={project.links.repo}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded text-sm font-medium text-zinc-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          className="inline-flex min-h-11 items-center rounded text-sm font-medium text-zinc-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
           aria-label={`${t("projects.codigo")} ${project.title} (se abre en nueva pestaña)`}
         >
           {t("projects.codigo")}
@@ -116,7 +116,7 @@ function ProjectLinks({ project, onCase }: { project: Project; onCase?: () => vo
           onClick={onCase}
           aria-haspopup="dialog"
           aria-label={`${t("projects.verCaso")}: ${project.title}`}
-          className="rounded text-sm font-medium text-emerald-300 hover:text-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+          className="inline-flex min-h-11 items-center rounded text-sm font-medium text-emerald-300 hover:text-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
         >
           {t("projects.verCaso")} →
         </button>
@@ -235,7 +235,7 @@ export default function Projects() {
                   setFilter(id);
                   setExpanded(false);
                 }}
-                className={`rounded-full border px-4 py-2 text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                className={`min-h-11 rounded-full border px-4 py-2 text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
                   active
                     ? "border-white/30 bg-white text-black"
                     : "border-white/10 bg-white/5 text-zinc-300 hover:border-white/20 hover:bg-white/10"

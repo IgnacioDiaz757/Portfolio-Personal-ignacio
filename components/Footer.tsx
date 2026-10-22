@@ -8,7 +8,7 @@ export default function Footer() {
           href="https://mail.google.com/mail/?view=cm&fs=1&to=IGNADIAZCAB1905@GMAIL.COM"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-zinc-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+          className="inline-flex min-h-11 items-center text-zinc-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
           aria-label="Enviar email a IGNADIAZCAB1905@GMAIL.COM usando Gmail"
         >
           IGNADIAZCAB1905@GMAIL.COM
