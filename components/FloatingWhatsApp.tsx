@@ -12,7 +12,7 @@ export default function FloatingWhatsApp() {
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed left-auto bottom-4 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 ease-out hover:scale-105 hover:brightness-110 hover:shadow-[0_0_0_3px_rgba(37,211,102,0.35),0_0_28px_8px_rgba(37,211,102,0.45),0_0_48px_12px_rgba(37,211,102,0.2)] motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-[#0a0a0a] sm:bottom-8 sm:right-8 sm:h-16 sm:w-16"
+      className="fixed left-auto bottom-4 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-[#ffffff] shadow-lg transition-all duration-300 ease-out hover:scale-105 hover:brightness-110 hover:shadow-[0_0_0_3px_rgba(37,211,102,0.35),0_0_28px_8px_rgba(37,211,102,0.45),0_0_48px_12px_rgba(37,211,102,0.2)] motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-[var(--background)] sm:bottom-8 sm:right-8 sm:h-16 sm:w-16"
       aria-label={label}
     >
       <svg

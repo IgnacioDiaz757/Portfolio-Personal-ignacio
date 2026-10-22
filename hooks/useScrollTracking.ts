@@ -1,7 +1,17 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import { throttle, scrollToSection } from "@/lib/utils";
+import { scrollToSection } from "@/lib/utils";
+
+const ANIMATION_CLASSES: Record<string, string> = {
+  "fade-in": "animate-fade-in",
+  "fade-in-up": "animate-fade-in-up",
+  "fade-in-down": "animate-fade-in-down",
+  "fade-in-left": "animate-fade-in-left",
+  "fade-in-right": "animate-fade-in-right",
+  "scale-in": "animate-scale-in",
+  "slide-in-up": "animate-slide-in-up",
+};
 
 export function useScrollTracking() {
   const [scrolled, setScrolled] = useState(false);
@@ -9,114 +19,63 @@ export function useScrollTracking() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const sectionsRef = useRef<{ [key: string]: HTMLElement | null }>({});
 
-  // Throttled scroll handler
-  const handleScroll = useCallback(
-    throttle(() => {
-      const scrollY = window.scrollY;
-      setScrolled(scrollY > 50);
-      setShowScrollTop(scrollY > 500);
-
-      // Update active section based on scroll position
-      const sections = Object.keys(sectionsRef.current);
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sectionsRef.current[sections[i]];
-        if (section) {
-          const rect = section.getBoundingClientRect();
-          if (rect.top <= 100) {
-            setActiveSection(sections[i]);
-            break;
-          }
-        }
-      }
-    }, 100),
-    []
-  );
-
+  // scroll: un cálculo por frame y solo se actualiza el estado si el valor cambia
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const y = window.scrollY;
+      setScrolled(y > 50);
+      setShowScrollTop(y > 500);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
-  // Enhanced Intersection Observer for animations with different types
+  // sección activa: una franja en el tercio superior de la pantalla, sin leer layout en cada scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.getAttribute("data-section") ?? "inicio");
+        }
+      },
+      { rootMargin: "-35% 0px -60% 0px" }
+    );
+    Object.values(sectionsRef.current).forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  // animaciones de entrada: se disparan una sola vez por elemento
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const element = entry.target as HTMLElement;
-            const animationType = element.getAttribute("data-animate") || "fade-in";
-            
-            // Remove existing animation classes
-            element.classList.remove(
-              "animate-fade-in",
-              "animate-fade-in-up",
-              "animate-fade-in-down",
-              "animate-fade-in-left",
-              "animate-fade-in-right",
-              "animate-scale-in",
-              "animate-slide-in-up"
-            );
-            
-            // Add appropriate animation based on data-animate value
-            switch (animationType) {
-              case "fade-in-up":
-                element.classList.add("animate-fade-in-up");
-                break;
-              case "fade-in-down":
-                element.classList.add("animate-fade-in-down");
-                break;
-              case "fade-in-left":
-                element.classList.add("animate-fade-in-left");
-                break;
-              case "fade-in-right":
-                element.classList.add("animate-fade-in-right");
-                break;
-              case "scale-in":
-                element.classList.add("animate-scale-in");
-                break;
-              case "slide-in-up":
-                element.classList.add("animate-slide-in-up");
-                break;
-              default:
-                element.classList.add("animate-fade-in");
-            }
-            
-            // Stop observing once animated
-            observer.unobserve(element);
-          }
+          if (!entry.isIntersecting) return;
+          const element = entry.target as HTMLElement;
+          const type = element.getAttribute("data-animate") || "fade-in";
+          element.classList.remove(...Object.values(ANIMATION_CLASSES));
+          element.classList.add(ANIMATION_CLASSES[type] ?? ANIMATION_CLASSES["fade-in"]);
+          observer.unobserve(element);
         });
       },
       { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
 
-    const elements = document.querySelectorAll("[data-animate]");
-    elements.forEach((el) => observer.observe(el));
-
+    document.querySelectorAll("[data-animate]").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
-
-  // Parallax effect for background elements
-  useEffect(() => {
-    const handleParallax = throttle(() => {
-      const scrollY = window.scrollY;
-      const parallaxElements = document.querySelectorAll(".parallax-slow");
-      
-      parallaxElements.forEach((el) => {
-        const element = el as HTMLElement;
-        const speed = parseFloat(element.getAttribute("data-speed") || "0.5");
-        const yPos = -(scrollY * speed);
-        element.style.transform = `translateY(${yPos}px)`;
-      });
-    }, 16);
-
-    window.addEventListener("scroll", handleParallax, { passive: true });
-    return () => window.removeEventListener("scroll", handleParallax);
   }, []);
 
   const handleNavClick = useCallback((href: string, onMenuClose?: () => void) => {
     onMenuClose?.();
-    const id = href.replace("#", "");
-    scrollToSection(id, 80);
+    scrollToSection(href.replace("#", ""), 80);
   }, []);
 
   return {
@@ -127,5 +86,3 @@ export function useScrollTracking() {
     handleNavClick,
   };
 }
-
-

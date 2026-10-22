@@ -20,7 +20,7 @@ export default function ScrollToTop({ show }: ScrollToTopProps) {
           scrollToTop();
         }
       }}
-      className="fixed right-4 bottom-28 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500 p-0 text-black shadow-lg transition-all hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-[#0a0a0a] sm:bottom-[7.5rem] sm:right-8 sm:h-14 sm:w-14"
+      className="fixed right-4 bottom-28 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500 p-0 text-black shadow-lg transition-all hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-[var(--background)] sm:bottom-[7.5rem] sm:right-8 sm:h-14 sm:w-14"
       aria-label="Volver al inicio de la página"
     >
       <svg

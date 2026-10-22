@@ -6,7 +6,9 @@
     "proyectos": "Projetos",
     "experiencia": "Experiência",
     "contacto": "Contato",
-    "trabajaConmigo": "Trabalhe comigo"
+    "trabajaConmigo": "Trabalhe comigo",
+    "temaClaro": "Mudar para o modo claro",
+    "temaOscuro": "Mudar para o modo escuro"
   },
   "hero": {
     "saludo": "👋 Olá, sou Juan Ignacio",
@@ -17,7 +19,8 @@
     "verProyectos": "Ver Projetos",
     "disponible": "Disponível para projetos",
     "ubicacion": "Córdoba, Argentina",
-    "remoto": "Remoto"
+    "remoto": "Remoto",
+    "descargarCV": "Baixar CV"
   },
   "about": {
     "titulo": "Sobre mim",
@@ -38,19 +41,39 @@
     "subtitulo": "Alguns dos projetos em que trabalhei",
     "verDemo": "Ver Demo →",
     "codigo": "Código →",
-    "masProyectos": "Estes sao alguns projetos proprios que desenvolvi. Tambem trabalhei em conjunto com outros programadores, resolvendo diferentes problemas e criando outros tipos de solucoes. Se quiser saber mais, entre em contato comigo."
+    "verTodos": "Ver todos os projetos",
+    "verMenos": "Ver menos",
+    "privado": "Projeto privado",
+    "destacado": "Destaque",
+    "masProyectos": "Estes sao alguns projetos proprios que desenvolvi. Tambem trabalhei em conjunto com outros programadores, resolvendo diferentes problemas e criando outros tipos de solucoes. Se quiser saber mais, entre em contato comigo.",
+    "filtroTodos": "Todos",
+    "filtroSistemas": "Sistemas e apps",
+    "filtroWeb": "Sites",
+    "filtroTiendas": "Lojas e catálogos",
+    "verCaso": "Ver estudo de caso",
+    "filtrar": "Filtrar projetos"
   },
   "experience": {
     "titulo": "Experiência",
-    "subtitulo": "Minha trajetória profissional"
+    "subtitulo": "Minha trajetória profissional",
+    "logros": "O que construo"
   },
   "contact": {
-    "titulo": "Vamos trabalhar juntos?",
-    "descripcion": "Estou sempre aberto a discutir novos projetos, ideias criativas ou oportunidades para fazer parte de suas visões.",
+    "titulo": "Tem uma ideia? Vamos construí-la",
+    "descripcion": "Conte-me o que precisa: um site, um sistema de gestão ou uma automação. Respondo com uma proposta clara.",
     "enviarWhatsApp": "Enviar via WhatsApp",
     "verGitHub": "Ver GitHub",
     "tambienEn": "Você também pode me encontrar em:",
-    "whatsappFlotante": "Contatar pelo WhatsApp"
+    "whatsappFlotante": "Contatar pelo WhatsApp",
+    "disponible": "Disponível para novos projetos",
+    "respuesta": "Respondo em menos de 24 h",
+    "escribirEmail": "Enviar email",
+    "copiarEmail": "Copiar email",
+    "copiado": "Copiado!",
+    "formTitulo": "Ou deixe sua mensagem",
+    "formNota": "O WhatsApp abrirá com sua mensagem pronta para enviar.",
+    "nuevaPestana": "abre em nova aba",
+    "descargarCV": "Baixar CV"
   },
   "footer": {
     "derechos": "Todos os direitos reservados.",
@@ -73,6 +96,14 @@
     "descripcionPlaceholder": "Conte-me sobre seu projeto...",
     "enviar": "Enviar via WhatsApp",
     "enviando": "Enviando..."
+  },
+  "caso": {
+    "rol": "Meu papel",
+    "desafio": "O desafio",
+    "solucion": "A solução",
+    "resultado": "O resultado",
+    "stack": "Tecnologias",
+    "cerrar": "Fechar",
+    "privado": "Projeto privado: o caso é exibido sem link público."
   }
 }
-

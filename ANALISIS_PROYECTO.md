@@ -272,7 +272,7 @@ app/
 ### **2. Configuración de Entorno**
 Agregar `.env.local` para variables:
 ```env
-NEXT_PUBLIC_SITE_URL=https://juanignaciodiaz.dev
+NEXT_PUBLIC_SITE_URL=https://portfoliopersonalignaciodiaz.vercel.app
 NEXT_PUBLIC_WHATSAPP=+5493512606190
 NEXT_PUBLIC_GITHUB=https://github.com/IgnacioDiaz757
 ```

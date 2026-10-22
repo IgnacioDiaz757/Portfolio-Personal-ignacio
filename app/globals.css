@@ -1,21 +1,95 @@
 @import "tailwindcss";
 
+/* Tema oscuro por defecto; el claro se activa con <html data-theme="light"> (ver lib/theme.ts) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  color-scheme: dark;
+
+  /* grises de texto reforzados para contraste (ver reglas .text-zinc-* más abajo) */
+  --tx-300: #f4f4f5;
+  --tx-400: #e4e4e7;
+  --tx-500: #d4d4d8;
+  --tx-blue: #60a5fa;
+  --focus-ring: #60a5fa;
+}
+
+/*
+ * Tema claro: se redefinen las variables de Tailwind, así las clases existentes
+ * (text-white, bg-white/5, text-zinc-300, bg-emerald-500...) se adaptan solas.
+ * white pasa a ser "tinta", black pasa a ser "papel" y la escala zinc se espeja.
+ */
+:root[data-theme="light"] {
+  --background: #f6f6f3;
+  --foreground: #111113;
+  color-scheme: light;
+
+  --tx-300: #27272a;
+  --tx-400: #3f3f46;
+  --tx-500: #52525b;
+  --tx-blue: #1d4ed8;
+  --focus-ring: #1d4ed8;
+
+  --color-white: #111113;
+  --color-black: #ffffff;
+
+  --color-zinc-50: #09090b;
+  --color-zinc-100: #18181b;
+  --color-zinc-200: #27272a;
+  --color-zinc-300: #3f3f46;
+  --color-zinc-400: #52525b;
+  --color-zinc-600: #a1a1aa;
+  --color-zinc-700: #d4d4d8;
+  --color-zinc-800: #e4e4e7;
+  --color-zinc-900: #f4f4f5;
+  --color-zinc-950: #fafafa;
+
+  /* acentos más oscuros para mantener el contraste sobre fondo claro */
+  --color-emerald-300: #047857;
+  --color-emerald-400: #059669;
+  --color-emerald-500: #047857;
+  --color-blue-300: #1e40af;
+  --color-blue-400: #1d4ed8;
+  --color-sky-400: #0369a1;
+}
+
+/*
+ * Zonas que siempre se ven oscuras (ventana de código, marcos de captura):
+ * devuelve las variables a sus valores del tema oscuro.
+ */
+.force-dark {
+  --tx-300: #f4f4f5;
+  --tx-400: #e4e4e7;
+  --tx-500: #d4d4d8;
+  --tx-blue: #60a5fa;
+  --focus-ring: #60a5fa;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-600: #52525b;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-sky-400: #38bdf8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-oswald);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 html {
@@ -166,10 +240,57 @@ body {
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Hero: texto en bucle detrás de la foto (el contenido va duplicado, -50% cierra el ciclo) */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 46s linear infinite;
+}
+
+/* Hero: la firma se traza y luego se rellena */
+@keyframes sign-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes sign-fill {
+  to {
+    fill-opacity: 1;
+  }
+}
+
+.signature-path {
+  fill-opacity: 0;
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation:
+    sign-draw 2.6s cubic-bezier(0.65, 0, 0.35, 1) 0.9s forwards,
+    sign-fill 0.6s ease-out 3.2s forwards;
 }
 
 /* Stagger animation delays */
@@ -207,7 +328,7 @@ body {
 
 /* Focus visible improvements - Enhanced for better visibility */
 *:focus-visible {
-  outline: 3px solid #60a5fa;
+  outline: 3px solid var(--focus-ring);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -219,35 +340,38 @@ body {
   }
   
   .text-zinc-400 {
-    color: #d4d4d8 !important; /* Better contrast */
+    color: var(--tx-400) !important; /* Better contrast */
   }
   
   .text-zinc-300 {
-    color: #e4e4e7 !important; /* Better contrast */
+    color: var(--tx-300) !important; /* Better contrast */
   }
   
   /* Improved border contrast for high contrast mode */
   [class*="border-white"] {
-    border-color: rgba(255, 255, 255, 0.3) !important;
+    border-color: color-mix(in srgb, var(--color-white) 30%, transparent) !important;
   }
 }
 
 /* Improved color contrast for accessibility - WCAG AA compliant */
 .text-zinc-400 {
-  color: #e4e4e7; /* Improved from #a1a1aa to meet WCAG AA (4.5:1 ratio) */
+  color: var(--tx-400); /* Improved from #a1a1aa to meet WCAG AA (4.5:1 ratio) */
 }
 
 .text-zinc-500 {
-  color: #d4d4d8; /* Improved contrast for better readability */
+  color: var(--tx-500); /* Improved contrast for better readability */
 }
 
 .text-zinc-300 {
-  color: #f4f4f5; /* Enhanced for better contrast */
+  color: var(--tx-300); /* Enhanced for better contrast */
 }
 
 /* Typography - Oswald font with compact styling */
-* {
-  font-family: var(--font-oswald), sans-serif;
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -260,6 +384,20 @@ p, span, a, button, li, div {
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+/* Párrafos: Oswald en mayúsculas cansa en textos largos; se leen mejor en una sans normal.
+   Va después de las reglas de arriba y cubre los span/a anidados (el * les pone Oswald). */
+p,
+p * {
+  font-family: var(--font-body), system-ui, sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+p {
+  font-weight: 400;
+  line-height: 1.65;
 }
 
 /* Adjust font weights for specific elements */
@@ -281,22 +419,24 @@ p, span, a, button, li, div {
 
 /* Ensure sufficient contrast for links */
 a.text-blue-400 {
-  color: #60a5fa; /* Improved contrast */
+  color: var(--tx-blue); /* Improved contrast */
 }
 
 a.text-zinc-400 {
-  color: #e4e4e7; /* Better contrast */
+  color: var(--tx-400); /* Better contrast */
 }
 
 /* Better contrast for borders - using attribute selector for Tailwind classes */
 [class*="border-white"] {
-  border-color: rgba(255, 255, 255, 0.2); /* Improved from 0.1 to 0.2 */
+  border-color: color-mix(in srgb, var(--color-white) 20%, transparent); /* Improved from 0.1 to 0.2 */
 }
 
 /* Smooth transitions */
 a,
 button {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: color, background-color, border-color, opacity, transform, box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Enhanced button interactions (fixed/floating UI must use data-floating-ui so position:fixed is not overridden) */
@@ -324,12 +464,6 @@ button:not([data-floating-ui]):hover::before,
 a[role="button"]:not([data-floating-ui]):hover::before {
   width: 300px;
   height: 300px;
-}
-
-/* Parallax effect utility */
-.parallax-slow {
-  will-change: transform;
-  transition: transform 0.3s ease-out;
 }
 
 /* Smooth scroll reveal */
@@ -413,3 +547,4 @@ select:focus {
   outline-offset: 3px;
   border-radius: 0.375rem;
 }
+

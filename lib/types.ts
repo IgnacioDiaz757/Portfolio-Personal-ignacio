@@ -3,6 +3,8 @@ export interface NavLink {
   href: string;
 }
 
+export type ProjectCategory = "sistemas" | "web" | "tiendas";
+
 export interface Project {
   title: string;
   summary: string;
@@ -13,6 +15,14 @@ export interface Project {
     repo: string;
   };
   hideLinks?: boolean; // Para ocultar links en sistemas de gestión privados
+  image?: string; // captura en /public/projects
+  metric?: ProjectMetric;
+  category: ProjectCategory;
+}
+
+export interface ProjectMetric {
+  value: string;
+  label: string;
 }
 
 export interface SkillGroup {
@@ -26,6 +36,14 @@ export interface Experience {
   period: string;
   description: string;
   achievements?: readonly string[];
+  stages?: readonly ExperienceStage[];
+}
+
+export interface ExperienceStage {
+  label: string; // año o nombre de la etapa
+  title: string;
+  description: string;
+  techs?: readonly string[];
 }
 
 export interface SocialLink {
@@ -34,3 +52,10 @@ export interface SocialLink {
   icon: string;
 }
 
+
+export interface CaseStudy {
+  role: string;
+  challenge: string;
+  solution: readonly string[];
+  result: readonly string[];
+}

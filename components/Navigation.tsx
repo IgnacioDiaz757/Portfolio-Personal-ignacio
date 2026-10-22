@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { GITHUB_URL, WHATSAPP_URL } from "@/lib/data";
 import { useLanguage } from "@/contexts/LanguageContext";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavigationProps {
   scrolled: boolean;
@@ -32,11 +34,36 @@ export default function Navigation({
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const languageMenuRefDesktop = useRef<HTMLDivElement>(null);
   const languageMenuRefMobile = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLSpanElement>(null);
+
+  // barra de progreso de lectura; se actualiza directo en el DOM para no re-renderizar
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const bar = progressRef.current;
+      if (!bar) return;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+      bar.style.transform = `scaleX(${progress})`;
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   const languages = [
-    { code: "es" as const, flag: "https://flagcdn.com/w20/es.png", label: "Español" },
-    { code: "en" as const, flag: "https://flagcdn.com/w20/us.png", label: "English" },
-    { code: "pt" as const, flag: "https://flagcdn.com/w20/pt.png", label: "Português" },
+    { code: "es" as const, flag: "/flags/es.svg", label: "Español" },
+    { code: "en" as const, flag: "/flags/us.svg", label: "English" },
+    { code: "pt" as const, flag: "/flags/pt.svg", label: "Português" },
   ];
 
   const currentLanguage = languages.find((lang) => lang.code === language) || languages[0];
@@ -75,7 +102,7 @@ export default function Navigation({
       if (!languageMenuOpen) return;
 
       const menuItems = Array.from(
-        document.querySelectorAll('[role="menuitem"]')
+        document.querySelectorAll('[role="menuitemradio"]')
       ) as HTMLElement[];
       
       if (menuItems.length === 0) return;
@@ -128,6 +155,12 @@ export default function Navigation({
       role="navigation"
       aria-label="Navegación principal"
     >
+      <span
+        ref={progressRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-0 h-0.5 w-full origin-left bg-gradient-to-r from-emerald-300 to-sky-400"
+        style={{ transform: "scaleX(0)" }}
+      />
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
         <a
           href="#inicio"
@@ -148,9 +181,8 @@ export default function Navigation({
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border-2 border-emerald-500 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black"
+            className="order-2 rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black"
             aria-label="Ir al perfil de GitHub"
-            style={{ borderColor: '#10b981' }}
           >
             <svg
               viewBox="0 0 24 24"
@@ -161,7 +193,7 @@ export default function Navigation({
               <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.93.58.11.79-.25.79-.56 0-.28-.01-1.05-.02-2.07-3.2.7-3.88-1.54-3.88-1.54-.53-1.35-1.29-1.71-1.29-1.71-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.97.1-.75.4-1.26.72-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.28 1.19-3.09-.12-.3-.52-1.5.11-3.12 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.4.98.01 1.97.14 2.89.4 2.21-1.49 3.18-1.18 3.18-1.18.63 1.62.23 2.82.11 3.12.74.81 1.19 1.83 1.19 3.09 0 4.43-2.69 5.4-5.25 5.68.41.36.78 1.08.78 2.18 0 1.57-.01 2.83-.01 3.22 0 .31.21.68.8.56C20.22 21.39 23.5 17.09 23.5 12 23.5 5.65 18.35.5 12 .5Z" />
             </svg>
           </a>
-          <div className="flex items-center gap-4 lg:gap-6">
+          <div className="order-1 flex items-center gap-4 lg:gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -170,10 +202,10 @@ export default function Navigation({
                   e.preventDefault();
                   onNavClick(link.href);
                 }}
-                className={`text-xs lg:text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black rounded px-2 py-1 ${
+                className={`relative text-xs lg:text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black rounded px-2 py-1 after:absolute after:inset-x-2 after:-bottom-0.5 after:h-0.5 after:origin-left after:rounded-full after:bg-gradient-to-r after:from-emerald-300 after:to-sky-400 after:transition-transform after:duration-300 motion-reduce:after:transition-none ${
                   activeSection === link.href.replace("#", "")
-                    ? "text-white"
-                    : "text-zinc-300 hover:text-white"
+                    ? "text-white after:scale-x-100"
+                    : "text-zinc-300 hover:text-white after:scale-x-0 hover:after:scale-x-50"
                 }`}
                 aria-current={
                   activeSection === link.href.replace("#", "")
@@ -186,7 +218,8 @@ export default function Navigation({
             ))}
           </div>
           {/* Language Selector - Desktop */}
-          <div className="relative" ref={languageMenuRefDesktop}>
+          <ThemeToggle className="order-3" />
+          <div className="relative order-4" ref={languageMenuRefDesktop}>
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -198,15 +231,14 @@ export default function Navigation({
                   setLanguageMenuOpen(!languageMenuOpen);
                 }
               }}
-              className="rounded-full border-2 border-emerald-500 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer"
+              className="rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer"
               aria-label={`Idioma actual: ${currentLanguage.label}. Seleccionar idioma`}
               aria-expanded={languageMenuOpen}
               aria-haspopup="true"
               aria-controls="language-menu-desktop"
               type="button"
-              style={{ borderColor: '#10b981' }}
             >
-              <img 
+              <Image width={20} height={20}
                 src={currentLanguage.flag} 
                 alt=""
                 className="w-5 h-5 object-cover rounded-sm pointer-events-none"
@@ -228,7 +260,7 @@ export default function Navigation({
                         e.stopPropagation();
                         handleLanguageSelect(lang.code);
                       }}
-                      role="menuitem"
+                      role="menuitemradio"
                       tabIndex={language === lang.code ? 0 : -1}
                       className={`w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors cursor-pointer focus:outline-none focus:bg-white/10 ${
                         language === lang.code
@@ -239,7 +271,7 @@ export default function Navigation({
                       aria-label={`Cambiar idioma a ${lang.label}`}
                       aria-checked={language === lang.code}
                     >
-                      <img 
+                      <Image width={20} height={20}
                         src={lang.flag} 
                         alt=""
                         className="w-5 h-5 object-cover rounded-sm pointer-events-none"
@@ -259,7 +291,7 @@ export default function Navigation({
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-emerald-500 px-4 lg:px-5 py-2 text-xs lg:text-sm font-semibold text-black transition hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-black"
+            className="order-5 rounded-full bg-emerald-500 px-4 lg:px-5 py-2 text-xs lg:text-sm font-semibold text-black transition hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-black"
           >
             {t("nav.trabajaConmigo")}
           </a>
@@ -267,6 +299,7 @@ export default function Navigation({
 
         {/* Mobile/Tablet Actions */}
         <div className="xl:hidden flex items-center gap-2">
+          <ThemeToggle />
           {/* Language Selector - Mobile/Tablet */}
           <div className="relative" ref={languageMenuRefMobile}>
             <button
@@ -280,15 +313,14 @@ export default function Navigation({
                   setLanguageMenuOpen(!languageMenuOpen);
                 }
               }}
-              className="rounded-full border-2 border-emerald-500 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer"
+              className="rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:bg-emerald-500/10 hover:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black cursor-pointer"
               aria-label={`Idioma actual: ${currentLanguage.label}. Seleccionar idioma`}
               aria-expanded={languageMenuOpen}
               aria-haspopup="true"
               aria-controls="language-menu-mobile"
               type="button"
-              style={{ borderColor: '#10b981' }}
             >
-              <img 
+              <Image width={20} height={20}
                 src={currentLanguage.flag} 
                 alt=""
                 className="w-5 h-5 object-cover rounded-sm pointer-events-none"
@@ -310,7 +342,7 @@ export default function Navigation({
                         e.stopPropagation();
                         handleLanguageSelect(lang.code);
                       }}
-                      role="menuitem"
+                      role="menuitemradio"
                       tabIndex={language === lang.code ? 0 : -1}
                       className={`w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors cursor-pointer focus:outline-none focus:bg-white/10 ${
                         language === lang.code
@@ -321,7 +353,7 @@ export default function Navigation({
                       aria-label={`Cambiar idioma a ${lang.label}`}
                       aria-checked={language === lang.code}
                     >
-                      <img 
+                      <Image width={20} height={20}
                         src={lang.flag} 
                         alt=""
                         className="w-5 h-5 object-cover rounded-sm pointer-events-none"
@@ -378,10 +410,10 @@ export default function Navigation({
                   e.preventDefault();
                   onNavClick(link.href);
                 }}
-                className={`text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-2 py-1 ${
+                className={`border-l-2 text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-3 py-1 ${
                   activeSection === link.href.replace("#", "")
-                    ? "text-white"
-                    : "text-zinc-300 hover:text-white"
+                    ? "border-emerald-400 text-white"
+                    : "border-transparent text-zinc-300 hover:text-white"
                 }`}
                 aria-current={
                   activeSection === link.href.replace("#", "") ? "page" : undefined

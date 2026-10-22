@@ -1,32 +1,34 @@
 "use client";
 
-import { GITHUB_URL, WHATSAPP_URL } from "@/lib/data";
+import { FiDownload } from "react-icons/fi";
+import { GITHUB_URL, WHATSAPP_URL, cvUrl } from "@/lib/data";
 import { useLanguage } from "@/contexts/LanguageContext";
+import HeroReveal from "./HeroReveal";
+import HeroMarquee from "./HeroMarquee";
+import HeroSignature from "./HeroSignature";
 
 interface HeroProps {
   onNavClick: (href: string, onMenuClose?: () => void) => void;
 }
 
 export default function Hero({ onNavClick }: HeroProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   return (
-    <section
-      id="inicio"
-      className="flex min-h-[85vh] sm:min-h-[90vh] flex-col items-center justify-center space-y-6 sm:space-y-8 text-center px-4"
-      aria-labelledby="hero-heading"
+    <div
+      className="grid min-h-[85vh] sm:min-h-[90vh] items-center gap-10 lg:grid-cols-2 lg:gap-12 text-center lg:text-left px-4 overflow-x-clip"
     >
-      <div className="space-y-4 sm:space-y-6 w-full">
+      <div className="order-2 lg:order-1 space-y-4 sm:space-y-6 w-full">
         <div className="inline-block rounded-full border border-white/10 bg-white/5 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm text-zinc-300 animate-scale-in">
           {t("hero.saludo")}
         </div>
         <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white px-4 animate-fade-in-up animate-delay-100">
           {t("hero.titulo")}
         </h1>
-        <p className="mx-auto max-w-2xl text-base sm:text-lg md:text-xl lg:text-2xl text-zinc-300 px-4 animate-fade-in-up animate-delay-200">
+        <p className="mx-auto lg:mx-0 max-w-2xl text-base sm:text-lg md:text-xl lg:text-2xl text-zinc-300 px-4 animate-fade-in-up animate-delay-200">
           {t("hero.descripcion")}
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4 px-4 animate-fade-in-up animate-delay-300">
+        <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2 sm:pt-4 px-4 lg:px-0 animate-fade-in-up animate-delay-300">
           <a
             href={GITHUB_URL}
             target="_blank"
@@ -49,7 +51,7 @@ export default function Hero({ onNavClick }: HeroProps) {
               e.preventDefault();
               onNavClick("#contacto");
             }}
-            className="rounded-lg bg-blue-600 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-blue-700 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black"
+            className="rounded-lg bg-blue-600 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-[#ffffff] transition-all hover:bg-blue-700 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black"
           >
             {t("hero.contactame")}
           </a>
@@ -71,9 +73,24 @@ export default function Hero({ onNavClick }: HeroProps) {
           >
             {t("hero.verProyectos")}
           </a>
+          <a
+            href={cvUrl(language)}
+            download
+            className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-white/10 hover:scale-105 hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
+          >
+            <FiDownload aria-hidden="true" className="h-4 w-4" />
+            {t("hero.descargarCV")}
+          </a>
         </div>
       </div>
-      <div className="mt-8 sm:mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-zinc-400 px-4">
+      <div className="order-1 lg:order-2 relative">
+        <HeroMarquee />
+        <div className="relative z-10">
+          <HeroReveal />
+          <HeroSignature />
+        </div>
+      </div>
+      <div className="order-3 lg:col-span-2 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-zinc-400 px-4">
         <div className="flex items-center gap-2">
           <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" aria-hidden="true" />
           <span>{t("hero.disponible")}</span>
@@ -83,7 +100,7 @@ export default function Hero({ onNavClick }: HeroProps) {
         <span aria-hidden="true">•</span>
         <span>{t("hero.remoto")}</span>
       </div>
-    </section>
+    </div>
   );
 }
 

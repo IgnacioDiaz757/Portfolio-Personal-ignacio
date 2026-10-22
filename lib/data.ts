@@ -1,7 +1,13 @@
-import type { NavLink, Project, SkillGroup, Experience, SocialLink } from "./types";
+import type { NavLink, SkillGroup, Experience, SocialLink } from "./types";
 
+/** dominio público del portafolio (sitemap, Open Graph y datos estructurados) */
+export const SITE_URL = "https://portfoliopersonalignaciodiaz.vercel.app";
+/** PDF generado con `npm run cv` (uno por idioma) */
+export const cvUrl = (language: string) => `/cv/Juan-Ignacio-Diaz-CV-${language}.pdf`;
 export const GITHUB_URL = "https://github.com/IgnacioDiaz757";
 /** +54 9 351 2606190 → wa.me abre WhatsApp o WhatsApp Business según lo instalado */
+export const WHATSAPP_NUMBER = "5493512606190";
+export const EMAIL = "ignadiazcab1905@gmail.com";
 export const WHATSAPP_URL =
   "https://wa.me/5493512606190?text=Hola%20Juan%2C%20quiero%20trabajar%20con%20vos";
 
@@ -12,83 +18,6 @@ export const navLinks: readonly NavLink[] = [
   { label: "Proyectos", href: "#proyectos" },
   { label: "Experiencia", href: "#experiencia" },
   { label: "Contacto", href: "#contacto" },
-] as const;
-
-export const projects: readonly Project[] = [
-  {
-    title: "Riveras del Suquía · Sistema de Gestión",
-    summary:
-      "ERP cooperativo que centraliza cobranzas, logística, stock e indicadores en tiempo real para la cooperativa Riveras del Suquía.",
-    impact:
-      "Reduje 70% la carga operativa mensual al automatizar reportes financieros y flujos de aprobación.",
-    stack: ["Next.js", "Node.js", "PostgreSQL", "Supabase", "Tailwind"],
-    links: {
-      live: "https://riverasdelsuquia.com.ar/sistema",
-      repo: "https://github.com/IgnacioDiaz757/RiverasDelSuquiaSistema",
-    },
-    hideLinks: true,
-  },
-  {
-    title: "Plataforma Gastronómica · Revista Matices",
-    summary:
-      "Marketplace gastronómico con catálogo editable, formularios inteligentes y contenidos premium para la Revista Matices.",
-    impact:
-      "Aumenté 3x las suscripciones digitales al integrar paywalls dinámicos y campañas IA.",
-    stack: ["Next.js", "Supabase", "Stripe", "Tailwind", "IA Integrations"],
-    links: {
-      live: "https://revistamaticescba.com",
-      repo: "https://github.com/IgnacioDiaz757/PlataformaMatices",
-    },
-  },
-  {
-    title: "Riveras del Suquía · Plataforma Web",
-    summary:
-      "Sitio público con mapas interactivos, agenda de eventos y CMS headless para comunicar actividades de la cooperativa.",
-    impact:
-      "Multipliqué por 5 las visitas orgánicas gracias a optimizaciones SEO y contenido administrable.",
-    stack: ["Next.js", "Mapbox", "Contentful", "Tailwind"],
-    links: {
-      live: "https://riverasdelsuquia.com.ar",
-      repo: "https://github.com/IgnacioDiaz757/RiverasDelSuquiaPagina",
-    },
-  },
-  {
-    title: "Viveros Unidos · Plataforma Web",
-    summary:
-      "Catálogo digital con filtros de especies, fichas técnicas descargables y pedidos mayoristas para la red Viveros Unidos.",
-    impact:
-      "Incrementé 45% las ventas B2B habilitando pedidos online con seguimiento y alertas automáticas.",
-    stack: ["React", "Next.js", "Supabase", "Tailwind"],
-    links: {
-      live: "https://viverosunidos.com",
-      repo: "https://github.com/IgnacioDiaz757/ViverosUnidos",
-    },
-  },
-  {
-    title: "Viveros Unidos · Sistema de Gestión",
-    summary:
-      "Control de stock, producción y distribución con tableros personalizados y notificaciones para viveros asociados.",
-    impact:
-      "Logré trazabilidad completa de lotes y un ahorro del 30% en tiempos de coordinación logística.",
-    stack: ["Next.js", "Node.js", "MongoDB", "Supabase", "tRPC"],
-    links: {
-      live: "https://viverosunidos.com/admin",
-      repo: "https://github.com/IgnacioDiaz757/ViverosUnidosGestion",
-    },
-    hideLinks: true,
-  },
-  {
-    title: "Coopyme · Plataforma Cooperativa",
-    summary:
-      "Portal integral para cooperativas pymes con módulos de membresías, capacitación y conexión con proveedores.",
-    impact:
-      "Facilité la autogestión de 150+ asociados mediante dashboards personalizados y automatizaciones IA.",
-    stack: ["Next.js", "Supabase", "Node.js", "Tailwind", "Automations"],
-    links: {
-      live: "https://coopyme.lat",
-      repo: "https://github.com/IgnacioDiaz757/Coopyme",
-    },
-  },
 ] as const;
 
 export const skillGroups: readonly SkillGroup[] = [
