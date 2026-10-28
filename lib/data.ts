@@ -100,7 +100,7 @@ export const socialLinks: readonly SocialLink[] = [
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/in/juanignaciodiaz",
+    href: "https://www.linkedin.com/in/ignacio-diaz-85a401229/",
     icon: "linkedin",
   },
   {
